@@ -10,17 +10,19 @@ class SVMClassifier:
   """
   svm classifier
   """
-  def __init__( self, legalLabels):
+  def __init__( self, legalLabels, max_iterations):
     self.legalLabels = legalLabels
     self.type = "svm"
+    self.max_iterations = max_iterations
     self.svm = svm.LinearSVC()
       
   def train( self, trainingData, trainingLabels, validationData, validationLabels ):
-    # print "Starting iteration ", iteration, "..."
-    data = []
-    for i in range(len(trainingData)):
-      data.append(trainingData[i].values())
-    self.svm.fit(data, trainingLabels)
+    for iteration in range(self.max_iterations):
+      print "Starting iteration ", iteration, "..."
+      data = []
+      for i in range(len(trainingData)):
+        data.append(trainingData[i].values())
+      self.svm.fit(data, trainingLabels)
         
     
   def classify(self, data ):

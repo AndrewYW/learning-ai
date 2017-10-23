@@ -132,7 +132,7 @@ def readCommand( argv ):
   elif(options.classifier == "perceptron"):
     classifier = perceptron.PerceptronClassifier(legalLabels,options.iterations)
   elif(options.classifier == "svm"):
-    classifier = svm.SVMClassifier(legalLabels)
+    classifier = svm.SVMClassifier(legalLabels, options.iterations)
   else:
     print "Unknown classifier:", options.classifier
     print USAGE_STRING
@@ -184,7 +184,7 @@ def runClassifier(args, options):
   # Conduct training and testing
   print "Training..."
   classifier.train(trainingData, trainingLabels, validationData, validationLabels)
-  print "Training test..."
+  print "Predicting on training data..."
   guesses = classifier.classify(trainingData)
   correct = [guesses[i] == trainingLabels[i] for i in range(len(trainingLabels))].count(True)
   print str(correct), ("correct out of " + str(len(trainingLabels)) + " (%.1f%%).") % (100.0 * correct / len(trainingLabels))
