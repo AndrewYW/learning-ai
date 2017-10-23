@@ -2,6 +2,7 @@
 # ----------
 
 import util
+from itertools import islice
 
 ## Constants
 DATUM_WIDTH = 0 # in pixels
@@ -159,12 +160,39 @@ def convertToInteger(data):
 
 # Testing
 
+def puzzleFeatureMap(filename, n, size):
+  """
+  Loads matrices representing puzzles of width x height size.
+  Loads the first n puzzles
+  Returns a list of util.Counter()'s to be used as trainingData/validationData/testingData
+  """
+  puzzles = []
+  with open(filename) as file:
+    for i in range(n):
+      puzzle = []
+      lines = list(islice(file, size+1))
+      for line in range(size):
+        puzzle.append([])
+        puzzle[i] = [int(n) for n in line.split(' ')]
+        # puzzle is a list of lists, integer values in each index position.
+      
+      counter = util.Counter()
+      for x in range(len(puzzle)):
+        for y in range(len(puzzle[x])):
+          counter[(x,y)] = puzzle[x][y]
+      puzzles.append(counter)
+  
+  return puzzles
+
+
+
+
 def _test():
   import doctest
   doctest.testmod() # Test the interactive sessions in function comments
   n = 1
-  items = loadDataFile("digitdata/trainingimages", n,28,28)
-  labels = loadLabelsFile("digitdata/traininglabels", n)
+  items = loadDataFile("data/digitdata/trainingimages", n,28,28)
+  labels = loadLabelsFile("data/digitdata/traininglabels", n)
   for i in range(1):
     print items[i]
     print items[i]
