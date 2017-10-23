@@ -184,6 +184,10 @@ def runClassifier(args, options):
   # Conduct training and testing
   print "Training..."
   classifier.train(trainingData, trainingLabels, validationData, validationLabels)
+  print "Training test..."
+  guesses = classifier.classify(trainingData)
+  correct = [guesses[i] == trainingLabels[i] for i in range(len(trainingLabels))].count(True)
+  print str(correct), ("correct out of " + str(len(trainingLabels)) + " (%.1f%%).") % (100.0 * correct / len(trainingLabels))
   print "Validating..."
   guesses = classifier.classify(validationData)
   correct = [guesses[i] == validationLabels[i] for i in range(len(validationLabels))].count(True)
