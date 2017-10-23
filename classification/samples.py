@@ -184,9 +184,6 @@ def puzzleFeatureMap(filename, n, size):
   
   return puzzles
 
-
-
-
 def _test():
   import doctest
   doctest.testmod() # Test the interactive sessions in function comments
