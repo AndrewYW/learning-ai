@@ -5,6 +5,7 @@ import mostFrequent
 import perceptron
 import svm
 import mlp
+import puzzler
 import samples
 import sys
 import util
@@ -100,7 +101,7 @@ def readCommand( argv ):
   from optparse import OptionParser  
   parser = OptionParser(USAGE_STRING)
   
-  parser.add_option('-c', '--classifier', help=default('The type of classifier'), choices=['mostFrequent', 'perceptron', 'mlp', 'svm'], default='mostFrequent')
+  parser.add_option('-c', '--classifier', help=default('The type of classifier'), choices=['mostFrequent', 'perceptron', 'mlp', 'svm', 'puzzler'], default='mostFrequent')
   parser.add_option('-t', '--training', help=default('The size of the training set'), default=TRAINING_SET_SIZE, type="int")
   parser.add_option('-w', '--weights', help=default('Whether to print weights'), default=False, action="store_true")
   parser.add_option('-i', '--iterations', help=default("Maximum iterations to run training"), default=3, type="int")
@@ -133,6 +134,9 @@ def readCommand( argv ):
     classifier = perceptron.PerceptronClassifier(legalLabels,options.iterations)
   elif(options.classifier == "svm"):
     classifier = svm.SVMClassifier(legalLabels, options.iterations)
+  elif(options.classifier == "puzzler"):
+    legalLabels = range(-2500,2500)
+    classifier = puzzler.PuzzleClassifier(legalLabels,options.iterations)
   else:
     print "Unknown classifier:", options.classifier
     print USAGE_STRING
@@ -167,19 +171,28 @@ def runClassifier(args, options):
   # Load data  
   numTraining = options.training
   numTest = options.test
-
-  rawTrainingData = samples.loadDataFile("data/digitdata/trainingimages", numTraining,DIGIT_DATUM_WIDTH,DIGIT_DATUM_HEIGHT)
-  trainingLabels = samples.loadLabelsFile("data/digitdata/traininglabels", numTraining)
-  rawValidationData = samples.loadDataFile("data/digitdata/validationimages", numTest,DIGIT_DATUM_WIDTH,DIGIT_DATUM_HEIGHT)
-  validationLabels = samples.loadLabelsFile("data/digitdata/validationlabels", numTest)
-  rawTestData = samples.loadDataFile("data/digitdata/testimages", numTest,DIGIT_DATUM_WIDTH,DIGIT_DATUM_HEIGHT)
-  testLabels = samples.loadLabelsFile("data/digitdata/testlabels", numTest)
-    
-  # Extract features
-  print "Extracting features..."
-  trainingData = map(featureFunction, rawTrainingData)
-  validationData = map(featureFunction, rawValidationData)
-  testData = map(featureFunction, rawTestData)
+  if options.classifier == "puzzler":
+    print "Setting puzzle data..."
+    trainingData = samples.puzzleFeatureMap("data/puzzledata/trainingpuzzles", numTraining, 50)
+    validationData = samples.puzzleFeatureMap("data/puzzledata/validationpuzzles", numTest, 50)
+    testData = samples.puzzleFeatureMap("data/puzzledata/testpuzzles", numTest, 50)
+    trainingLabels = samples.loadLabelsFile("data/puzzledata/trainingpuzzlelabels", numTraining)
+    validationLabels = samples.loadLabelsFile("data/puzzledata/validationpuzzlelabels", numTest)
+    testLabels = samples.loadLabelsFile("data/puzzledata/testpuzzlelabels", numTest)
+  else:
+    print "Regular dataset selected..."
+    rawTrainingData = samples.loadDataFile("data/digitdata/trainingimages", numTraining,DIGIT_DATUM_WIDTH,DIGIT_DATUM_HEIGHT)
+    trainingLabels = samples.loadLabelsFile("data/digitdata/traininglabels", numTraining)
+    rawValidationData = samples.loadDataFile("data/digitdata/validationimages", numTest,DIGIT_DATUM_WIDTH,DIGIT_DATUM_HEIGHT)
+    validationLabels = samples.loadLabelsFile("data/digitdata/validationlabels", numTest)
+    rawTestData = samples.loadDataFile("data/digitdata/testimages", numTest,DIGIT_DATUM_WIDTH,DIGIT_DATUM_HEIGHT)
+    testLabels = samples.loadLabelsFile("data/digitdata/testlabels", numTest)
+      
+    # Extract features
+    print "Extracting features..."
+    trainingData = map(featureFunction, rawTrainingData)
+    validationData = map(featureFunction, rawValidationData)
+    testData = map(featureFunction, rawTestData)
   
   # Conduct training and testing
   print "Training..."

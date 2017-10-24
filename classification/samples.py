@@ -170,10 +170,22 @@ def puzzleFeatureMap(filename, n, size):
   with open(filename) as file:
     for i in range(n):
       puzzle = []
-      lines = list(islice(file, size+1))
-      for line in range(size):
-        puzzle.append([])
-        puzzle[i] = [int(n) for n in line.split(' ')]
+      lines = []
+      for i in range(size):
+        lines.append(file.next())
+      try:
+        file.next()
+      except StopIteration:
+        return puzzles
+      print " lines size: " ,lines[size-1]
+      for line in lines:
+        #puzzle.append([])
+        line = line.replace("\r\n", "")
+        print "line: ", line, "***"
+        listo = map(int, line.split(" "))
+        puzzle.append(listo)
+        #print listo
+        #puzzle[i] = [int(n) for n in line.split(' ')]
         # puzzle is a list of lists, integer values in each index position.
       
       counter = util.Counter()
