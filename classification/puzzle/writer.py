@@ -8,9 +8,7 @@ def write_eval(eval, filename):
     with open (filename, 'a') as output:
         writer = csv.writer(output, delimiter = ' ')
         writer.writerow([eval])
-        writer.writerow([])
 def write_time(time, filename):
     with open(filename, 'a') as output:
         writer = csv.writer(output, delimiter = ' ')
         writer.writerow([time])
-        writer.writerow([])
