@@ -119,7 +119,6 @@ def main():
 
     for i in range(training):
         matrix = generate_matrix(index) #create random matrix (this is integer 2d list)
-        print "index value: ", str(index)
         node_matrix = create_node_matrix(matrix) #create node matrix
 
         start_ms = int(round(time() * 1000))
@@ -129,14 +128,17 @@ def main():
         
         string_matrix = generate_string_matrix(node_matrix)
         eval_function = str(get_eval_from_nodes(node_matrix)) #Get evaluation function from solved node matrix
-        print matrix
+
+        writer.write_puzzle(matrix, '../data/puzzledata/trainingpuzzles')
+        writer.write_eval(eval_function, '../data/puzzledata/trainingpuzzlelabels')
+        writer.write_time(elapsed, '../data/puzzledata/trainingpuzzletimes')
+
+        """
         for line in string_matrix:
             print line
-        print eval_function
-        print elapsed
-        #writer.write_puzzle(matrix, 'data/puzzledata/trainingpuzzles')
-        #writer.write_eval(eval_function, 'data/puzzledata/trainingpuzzlelabels')
-        #writer.write_time(elapsed, 'data/puzzledata/trainingpuzzletimes')
+        print 'Eval function: ', eval_function
+        print elapsed, ' ms'
+        """
         
 
 

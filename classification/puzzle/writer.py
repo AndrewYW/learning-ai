@@ -1,11 +1,16 @@
 import csv
 def write_puzzle(matrix, filename):
-    file = filename
-    with open (file, 'a') as output:
+    with open (filename, 'a') as output:
         writer = csv.writer(output, delimiter = ' ')
         writer.writerows(matrix)
-        writer.writerow('\n')
+        writer.writerow([])
 def write_eval(eval, filename):
-    file = filename
+    with open (filename, 'a') as output:
+        writer = csv.writer(output, delimiter = ' ')
+        writer.writerow([eval])
+        writer.writerow([])
 def write_time(time, filename):
-    file = filename
+    with open(filename, 'a') as output:
+        writer = csv.writer(output, delimiter = ' ')
+        writer.writerow([time])
+        writer.writerow([])
