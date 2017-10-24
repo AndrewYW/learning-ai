@@ -94,8 +94,6 @@ def random_restart(node_matrix, iterations, restarts):
     index = len(node_matrix)
 
     for restart in range(restarts):
-        print "Random restart hill climb iteration: ", iterations, "..."
-        print "Number of random restarts: " , restart, "..."
         current_matrix = hill_climb(node_matrix,iterations)
         new_matrix = create_node_matrix(generate_matrix(index))
         new_matrix = hill_climb(new_matrix,iterations)
@@ -222,13 +220,13 @@ def main():
     testOptimized = int(input('Number of optimized test puzzles:\n'))
 
     for i in range(training):
-        print "Creating unoptimized training puzzleset..."
+        print "Creating unoptimized training puzzleset: ", i, "..."
         matrix = generate_matrix(index) #create random matrix (this is integer 2d list)
         node_matrix = create_node_matrix(matrix) #create node matrix
 
-        start_ms = int(round(time() * 1000))
+        start_ms = round(time() * 1000)
         bfs(node_matrix) #Solves the node matrix
-        end_ms = int(round(time() * 1000)) - start_ms
+        end_ms = int(round(time() * 1000) - start_ms)
         elapsed = str(end_ms)
         
         string_matrix = generate_string_matrix(node_matrix)
@@ -239,18 +237,22 @@ def main():
         writer.write_time(elapsed, '../data/puzzledata/trainingpuzzletimes')
 
     for i in range(trainingOptimized):
-        print "Creating optimized training puzzle set..."
+        print "Creating optimized training puzzle set: ", i, "..."
         matrix = generate_matrix(index)
         node_matrix = create_node_matrix(matrix)
 
         #Applies random restart algorithm to the given node matrix.
         #Each hill climb algorithm iterates 1000 times, while there are i amount of restarts.
         #This allows for a bunch of solutions at different optimization levels.
-        node_matrix = random_restart(node_matrix, randint(50, 100), randint(1, 10))
+        iterations = randint(1, 100)
+        restarts = randint(1,10)
+        print "Hill climb iterations: ", iterations
+        print "Random restart times: ", restarts
+        node_matrix = random_restart(node_matrix, iterations, restarts)
 
         start_ms = round(time() * 1000)
         bfs(node_matrix) #Solves the node matrix
-        end_ms = round(time() * 1000) - start_ms
+        end_ms = int(round(time() * 1000) - start_ms)
         elapsed = str(end_ms)
         
         string_matrix = generate_string_matrix(node_matrix)
@@ -260,13 +262,13 @@ def main():
         writer.write_eval(eval_function, '../data/puzzledata/trainingpuzzlelabels')
         writer.write_time(elapsed, '../data/puzzledata/trainingpuzzletimes')
     for i in range(valid):
-        print "Creating unoptimized validation puzzle set..."
+        print "Creating unoptimized validation puzzle set: ", i, "..."
         matrix = generate_matrix(index) #create random matrix (this is integer 2d list)
         node_matrix = create_node_matrix(matrix) #create node matrix
 
-        start_ms = int(round(time() * 1000))
+        start_ms = round(time() * 1000)
         bfs(node_matrix) #Solves the node matrix
-        end_ms = int(round(time() * 1000)) - start_ms
+        end_ms = int(round(time() * 1000) - start_ms)
         elapsed = str(end_ms)
         
         string_matrix = generate_string_matrix(node_matrix)
@@ -284,11 +286,15 @@ def main():
         #Applies random restart algorithm to the given node matrix.
         #Each hill climb algorithm iterates 1000 times, while there are i amount of restarts.
         #This allows for a bunch of solutions at different optimization levels.
-        node_matrix = random_restart(node_matrix, randint(50, 100), randint(1, 10))
+        iterations = randint(1, 100)
+        restarts = randint(1,10)
+        print "Hill climb iterations: ", iterations
+        print "Random restart times: ", restarts
+        node_matrix = random_restart(node_matrix, iterations, restarts)
 
         start_ms = round(time() * 1000)
         bfs(node_matrix) #Solves the node matrix
-        end_ms = round(time() * 1000) - start_ms
+        end_ms = int(round(time() * 1000) - start_ms)
         elapsed = str(end_ms)
         
         string_matrix = generate_string_matrix(node_matrix)
@@ -302,9 +308,9 @@ def main():
         matrix = generate_matrix(index) #create random matrix (this is integer 2d list)
         node_matrix = create_node_matrix(matrix) #create node matrix
 
-        start_ms = int(round(time() * 1000))
+        start_ms = round(time() * 1000)
         bfs(node_matrix) #Solves the node matrix
-        end_ms = int(round(time() * 1000)) - start_ms
+        end_ms = int(round(time() * 1000) - start_ms)
         elapsed = str(end_ms)
         
         string_matrix = generate_string_matrix(node_matrix)
@@ -322,11 +328,15 @@ def main():
         #Applies random restart algorithm to the given node matrix.
         #Each hill climb algorithm iterates 1000 times, while there are i amount of restarts.
         #This allows for a bunch of solutions at different optimization levels.
-        node_matrix = random_restart(node_matrix, randint(50, 100), randint(1, 10))
+        iterations = randint(1, 100)
+        restarts = randint(1,10)
+        print "Hill climb iterations: ", iterations
+        print "Random restart times: ", restarts
+        node_matrix = random_restart(node_matrix, iterations, restarts)
 
         start_ms = round(time() * 1000)
         bfs(node_matrix) #Solves the node matrix
-        end_ms = round(time() * 1000) - start_ms
+        end_ms = int(round(time() * 1000) - start_ms)
         elapsed = str(end_ms)
         
         string_matrix = generate_string_matrix(node_matrix)
