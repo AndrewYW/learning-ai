@@ -165,6 +165,7 @@ def puzzleFeatureMap(filename, n, size):
   Loads matrices representing puzzles of width x height size.
   Loads the first n puzzles
   Returns a list of util.Counter()'s to be used as trainingData/validationData/testingData
+  File size is a multiple of 51 (50x50 puzzle + 1 empty line separating puzzles)
   """
   puzzles = []
   with open(filename) as file:
@@ -177,23 +178,16 @@ def puzzleFeatureMap(filename, n, size):
         file.next()
       except StopIteration:
         return puzzles
-      print " lines size: " ,lines[size-1]
       for line in lines:
-        #puzzle.append([])
         line = line.replace("\r\n", "")
-        print "line: ", line, "***"
         listo = map(int, line.split(" "))
         puzzle.append(listo)
-        #print listo
-        #puzzle[i] = [int(n) for n in line.split(' ')]
-        # puzzle is a list of lists, integer values in each index position.
       
       counter = util.Counter()
       for x in range(len(puzzle)):
         for y in range(len(puzzle[x])):
           counter[(x,y)] = puzzle[x][y]
       puzzles.append(counter)
-  
   return puzzles
 
 def _test():

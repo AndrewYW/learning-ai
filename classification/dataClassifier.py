@@ -172,7 +172,6 @@ def runClassifier(args, options):
   numTraining = options.training
   numTest = options.test
   if options.classifier == "puzzler":
-    print "Setting puzzle data..."
     trainingData = samples.puzzleFeatureMap("data/puzzledata/trainingpuzzles", numTraining, 50)
     validationData = samples.puzzleFeatureMap("data/puzzledata/validationpuzzles", numTest, 50)
     testData = samples.puzzleFeatureMap("data/puzzledata/testpuzzles", numTest, 50)
