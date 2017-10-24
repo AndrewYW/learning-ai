@@ -184,7 +184,10 @@ def runClassifier(args, options):
   # Conduct training and testing
   print "Training..."
   classifier.train(trainingData, trainingLabels, validationData, validationLabels)
-  print "Predicting on training data..."
+  print "Predicting on full training data..."
+  rawTrainingData = samples.loadDataFile('data/digitdata/trainingimages', TRAINING_SET_SIZE, DIGIT_DATUM_WIDTH, DIGIT_DATUM_HEIGHT)
+  trainingLabels = samples.loadLabelsFile('data/digitdata/traininglabels', TRAINING_SET_SIZE)
+  trainingData = map(featureFunction, rawTrainingData)
   guesses = classifier.classify(trainingData)
   correct = [guesses[i] == trainingLabels[i] for i in range(len(trainingLabels))].count(True)
   print str(correct), ("correct out of " + str(len(trainingLabels)) + " (%.1f%%).") % (100.0 * correct / len(trainingLabels))
