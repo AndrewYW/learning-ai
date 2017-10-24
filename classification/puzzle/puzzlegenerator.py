@@ -74,14 +74,18 @@ def hill_climb(node_matrix, iterations):
         node_eval = get_eval_from_nodes(node_matrix)
         temp_eval = get_eval_from_nodes(temp_matrix)
 
+        #print "Node: " , node_eval
+        #print "Temp: " , temp_eval
         # If new evaluation function is better, then node matrix becomes new one
         # Node matrix's depth and visited are reset so you can run solve again
         if temp_eval >= node_eval:
+            #print "New eval better"
             node_matrix = temp_matrix
             reset_matrix(node_matrix)
         else:
+            #print "Rejecting new"
             reset_matrix(node_matrix)
-    bfs(node_matrix)
+    #bfs(node_matrix)
     return node_matrix
 
 def random_restart(node_matrix, iterations, restarts):
@@ -130,6 +134,7 @@ def random_step_change(nodes, index):
     while row == index - 1 and col == index -1:
         row = randint(0, index-1)
         col = randint(0, index-1)
+    #print "Old steps: ", nodes[row][col].steps
     nodes[row][col].steps = randint(1, max(index-row-1, row, index-col-1, col))
 
     #Must regenerate children for changed index:
@@ -138,7 +143,8 @@ def random_step_change(nodes, index):
     nodes[row][col].get_down(nodes)
     nodes[row][col].get_left(nodes)
     nodes[row][col].get_right(nodes)
-
+    #print "Position: ", row, ", " , col
+    #print "New steps: ", nodes[row][col].steps
     return nodes
 def create_step_matrix(nodes):
     """
@@ -244,11 +250,13 @@ def main():
         #Applies random restart algorithm to the given node matrix.
         #Each hill climb algorithm iterates 1000 times, while there are i amount of restarts.
         #This allows for a bunch of solutions at different optimization levels.
-        iterations = randint(1, 100)
-        restarts = randint(1,10)
+        iterations = randint(100, 1000)
+        restarts = randint(1,5)
         print "Hill climb iterations: ", iterations
         print "Random restart times: ", restarts
         node_matrix = random_restart(node_matrix, iterations, restarts)
+        #node_matrix = hill_climb(node_matrix,iterations)
+
 
         start_ms = round(time() * 1000)
         bfs(node_matrix) #Solves the node matrix
@@ -286,8 +294,8 @@ def main():
         #Applies random restart algorithm to the given node matrix.
         #Each hill climb algorithm iterates 1000 times, while there are i amount of restarts.
         #This allows for a bunch of solutions at different optimization levels.
-        iterations = randint(1, 100)
-        restarts = randint(1,10)
+        iterations = randint(100, 1000)
+        restarts = randint(1,5)
         print "Hill climb iterations: ", iterations
         print "Random restart times: ", restarts
         node_matrix = random_restart(node_matrix, iterations, restarts)
@@ -328,8 +336,8 @@ def main():
         #Applies random restart algorithm to the given node matrix.
         #Each hill climb algorithm iterates 1000 times, while there are i amount of restarts.
         #This allows for a bunch of solutions at different optimization levels.
-        iterations = randint(1, 100)
-        restarts = randint(1,10)
+        iterations = randint(100, 1000)
+        restarts = randint(1,5)
         print "Hill climb iterations: ", iterations
         print "Random restart times: ", restarts
         node_matrix = random_restart(node_matrix, iterations, restarts)
