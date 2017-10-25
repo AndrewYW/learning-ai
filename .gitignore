@@ -1,2 +1,5 @@
 classification/*.pyc
 classification/puzzle/*.pyc
+classification/*.sh
+classification/*.txt
+classification/test.py
